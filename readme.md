@@ -53,5 +53,12 @@ The instruction set has been kept the same as the Little Man Computer, but the i
 
 Because addresses can only be stored as a 4-bit nibble, the ram is limited to 16 locations. Each of these store 8 bit values.
 In order to be able to cope with negative numbers, integer values in memory are interpreted as signed 8 bit numbers encoded using twos complement.
-## Try it
-You can see a live demo of this project here: [tools.withcode.uk/cpu](https://tools.withcode.uk/cpu)
+
+## Features
+This CPU simulation allows you to:
+- Step through each step of the fetch decode execute cycle
+- See which register is affected by each step with an explanation of what's happening
+- See how data changes in each register 
+- Write & run your own code on the CPU
+- Save / Share your code
+- View and run example code 
