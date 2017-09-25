@@ -5,6 +5,9 @@
 ## Summary
 This project is a simulation of the Little Man Computer CPU adapted to make it more suitable for OCR A Level students.
 
+## Try it
+You can see a live demo of this project here: [tools.withcode.uk/cpu](https://tools.withcode.uk/cpu)
+
 ## Background
 The Little Man Computer (LMC) model CPU is a brilliant way of introducting students to the fetch-decode-execute cycle that controls how a CPU operates.
 
@@ -31,22 +34,20 @@ The aim of this project is to explain what happens at each stage of the fetch, d
 A Little Man Computer CPU has 99 mailboxes (memory locations) which can each store a signed integer between -999 and 999.
 Instructions on a LMC are stored as 3 digit denary numbers where the most significant digit represents the instruction and the least significant two digits are the address.
 
-E.g. 
-`LDA 1` 
-
-assembles to the command `501`
+E.g. in LMC,
+`LDA 1` assembles to the command `501`
 
 which breaks down to:
   `5`  (Load) from address `01` (Mailbox 1)
   
 This CPU has 8 bit registers. The most significant 4 bits contain the opcode and the least significant 4 bits are the address.
 
-E.g. 
+E.g. in this CPU, 
 `10010001`
 
 splits into the opcode `1001` (or denary 5) and address `0001` (denary 1)
 
-This means Load from memory address 1
+This means also meads Load from memory address 1
 
 The instruction set has been kept the same as the Little Man Computer, but the instructions are encoded in binary rather than denary.
 
