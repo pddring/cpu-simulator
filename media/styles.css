@@ -1,0 +1,234 @@
+body {
+	font-family: 'VT323', monospace;
+	background-image: url('http://blog.withcode.uk/wp-content/uploads/2016/04/background.jpg');
+}
+
+.box {
+	padding: 10px;
+	background-color: #FFF;
+	border-radius: 10px;
+	box-shadow: 10px 10px rgba(0,0,0, 0.5);
+	margin: 20px;
+}
+.ram {
+	position: absolute;
+	bottom: 0px;
+	top: 0px;
+	right: 10px;
+	width: 30%;
+	overflow-y: scroll;
+	border: 2px solid #000;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+	background-color: #CFF;
+}
+.ram table {
+	background-color: #FFF;
+}
+.decode_unit {
+	position: absolute;
+	top: 20%;
+	background-color: #FFC;
+	border: 2px solid #000;
+	padding: 10px;
+	overflow-y: scroll;
+	bottom: 0px;
+	max-width: 50%;
+}
+
+.decode_unit table {
+	background-color: #FFF;
+}
+
+#cpu {
+	position: relative;
+	height: 95vh;
+}
+
+.cpu {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	padding: 10px;
+	margin: 10px;
+	width: 50%;
+	border: 2px solid #000;
+	border-radius: 10px;
+	background-color:#FCC;
+	bottom: 0px;
+}
+.value {
+	transition: all 0.5s;
+}
+.value:hover {
+	font-size: 2em;
+}
+
+.register {
+	position: absolute;
+	width: 30%;
+	background-color: #FFF;
+	border: 1px solid #000;
+	text-align: center;
+	z-index: 200;
+}
+
+#reg_pc {
+	left: 20%;
+	top: 10px;
+}
+
+#reg_mar {
+	right: 10px;
+	top: 10px;
+}
+
+#reg_acc {
+	right: 10px;
+	top: 15%;
+}
+
+#reg_mdr {
+	right: 10px;
+	top: 55%;
+}
+
+#reg_cir {
+	right: 10px;
+	top: 75%;
+}
+
+#alu,#cu {
+	position: absolute;
+	text-align: center;
+	padding: 10px;
+	display: block;
+	width: 30%;
+	border: 1px solid #000;
+}
+
+#alu {
+	left: 50%;
+	top: 35%;
+	background-color: #39F;
+}
+
+#cu {
+	right: 10px;
+	bottom: 10px;
+	background-color: #390;
+}
+
+#drawing {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 100;
+}
+.value_binary:hover:before {
+	content: "\f02a ";
+	font-family: FontAwesome;
+}
+
+.value_denary:hover:before {
+	content: "\f1ec ";
+	font-family: FontAwesome;
+}
+
+.value_hex:hover:before {
+	content: "\f292 ";
+	font-family: FontAwesome;
+}
+
+.edit-text {
+	text-align: center;
+}
+#run_buttons {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	z-index: 300;
+}
+
+#hint {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 80%;
+	background-color: rgba(255,255,255,0.9);
+	border: 2px solid #000;
+	border-radius: 0px 10px 0px 0px;
+	z-index: 250;
+	padding: 10px;
+	text-align: center;
+	font-size: 1.5em;
+	transition: all 1s;
+	pointer-events: none;
+}
+
+
+.hint-hidden {
+	opacity: 0;
+}
+
+#btn_toggle_hint {
+	position: fixed;
+	left: 10px;
+	bottom: 10px;
+	z-index: 350;
+}
+
+.fetch_decode_execute {
+	border-radius: 10px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.hint_name {
+	font-weight: bold;
+	color: #F00;
+}
+
+.fetch {
+	background-color: #F00;
+}
+
+.decode {
+	background-color: #0F0;
+}
+
+.execute {
+	background-color: #00F;
+	color: #FFF;
+}
+
+@keyframes highlight {
+	from {box-shadow:  0px 0px 15px rgba(255,0,0,0.5);}
+	to {box-shadow:  0px 0px 30px rgba(255,0,0,1);}
+}
+
+.active {
+	animation: highlight 2s linear infinite alternate;
+}
+
+.current_instruction::after{
+	content: " \f04b ";
+	font-family: FontAwesome;
+}
+
+.form-group label {
+    text-align: left;
+    font-weight: normal;
+}
+
+.form-group select {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+}
+
+#ad {
+	text-align: center;
+}

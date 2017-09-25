@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@pddring" />
+    <meta name="twitter:title" content="OCR A Level CPU Simulator" />
+    <meta name="twitter:description" content="Simulate and understand the fetch decode execute cycle" />
+    <meta name="twitter:image" content="https://tools.withcode.uk/cpu/thumb.jpg" />
+    
+    <meta property="og:title" content="OCR A Level CPU Simulator" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tools.withcode.uk/cpu" />
+    <meta property="og:description" content="Simulate and understand the fetch decode execute cycle" />
+    <meta property="og:image" content="https://tools.withcode.uk/cpu/thumb.jpg" />
+
+<title>OCR A Level CPU simulator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+<link rel="stylesheet" href="media/styles.css">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/cpu.js"></script>
+<script type="text/javascript" src="lib/raphael.min.js"></script>
+<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5989cbc50bf9cd001279351d&product=sticky-share-buttons"></script>
+
+</head>
+<body>
+
+<div class="box">
+<h1><i class="fa fa-microchip"></i> CPU Simulator</h1>
+<div>This tool is designed to simulate the registers and busses inside a Von Neumann CPU for students studying for an A Level Computer Science (OCR Exam board)</div>
+</div>
+
+<div id="options" class="box">
+<h2><i class="fa fa-cog"></i> Settings</h2>
+Show values as: 
+<div class="btn-group" role="group" aria-label="Number base">
+<button type="button" class="btn btn_values btn-secondary" id="btn_values_binary"><i class="fa fa-barcode"></i> Binary</button>
+<button type="button" class="btn btn_values btn-secondary" id="btn_values_denary"><i class="fa fa-calculator"></i> Denary</button>
+<button type="button" class="btn btn_values btn-secondary" id="btn_values_hex"><i class="fa fa-hashtag"></i> Hex</button>
+</div>
+
+<div class="btn-group" role="group" aria-label="Reset">
+<button type="button" class="btn btn_values btn-secondary" id="btn_reset_ram"><i class="fa fa-undo"></i> Reset RAM</button>
+<button type="button" class="btn btn_values btn-secondary" id="btn_reset_cpu"><i class="fa fa-undo"></i> Reset CPU</button>
+</div>
+
+<button type="button" class="btn btn-secondary" id="btn_examples" data-toggle="modal" data-target="#modal_examples"><i class="fa fa-thumbs-up"></i> Examples</button>
+
+<button type="button" class="btn btn-secondary" id="btn_import_export" data-toggle="modal" data-target="#modal_export"><i class="fa fa-save"></i> Import / Export</button>
+
+<button type="button" class="btn btn-secondary" id="btn_share"><i class="fa fa-share"></i> Share</button>
+
+<span class="form-group">
+  <label for="run_speed">Run speed:
+  <select class="form-control" id="run_speed">
+    <option value="10">Turbo (100 Hz)</option>
+    <option value="10">Fast (2 Hz)</option>
+    <option value="10" selected>Normal (1 Hz)</option>
+    <option value="10">Slow (0.5 Hz)</option>
+    <option value="10">Slug (0.2 Hz)</option>
+  </select>
+  </label>
+</span>
+
+<div id="run_buttons" class="btn-group" role="group" aria-label="Run">
+<button type="button" class="btn btn-secondary" id="btn_step"><i class="fa fa-step-forward"></i> Step</button>
+<button type="button" class="btn btn-secondary" id="btn_run"><i class="fa fa-play"></i> Run</button>
+</div>
+
+<button type="button" class="btn btn-secondary" id="btn_toggle_hint"><i class="fa fa-lightbulb-o"></i></button>
+<div id="hint"><span id="hint_text">Press the step button to see each stage of the fetch, decode execute cycle</span></div>
+</div>
+
+<div id="cpu" class="box">
+</div>
+
+
+<div id="modal_change_value" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modal_change_value_title">Change value</h4>
+      </div>
+      <div class="modal-body">
+        <p>Change value from: <span id="change_value_from"></span> to <input type="text" class="form-control edit-text" id="change_value_to"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn_change_value_ok" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check"></i> OK</button>
+        <button type="button" class="btn" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modal_export" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modal_change_value_title">Copy and paste program hex code</h4>
+      </div>
+      <div class="modal-body">
+        <textarea id="export_hex" class="form-control" rows="5"></textarea>
+      </div>
+      <div class="modal-footer">
+                <button type="button" id="btn_export" class="btn btn-default" data-dismiss="modal"><i class="fa fa-share"></i> Export</button>
+                <button type="button" id="btn_import" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check"></i> Import</button>
+        <button type="button" class="btn" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modal_examples" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modal_change_value_title">Example projects</h4>
+      </div>
+      <div class="modal-body">
+        <ol>
+        <li><a href="?ram=00000000000000000000000000000000">Blank project</a></li>
+        <li><a href="?ram=913f911f920000000000000000000000">Add two numbers</a></li>
+        <li><a href="?ram=913f913e2f895f92005e920000000000">Find the biggest out of two numbers</a></li>
+        </ol>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn_import" class="btn btn-default" data-dismiss="modal"><i class="fa fa-check"></i> Import</button>
+        <button type="button" class="btn" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="box text-center">This tool has been put together by P.Dring at Fulford School. Please <a href="http://blog.withcode.uk/about/contact/">contact me</a> if you have any questions or spot any bugs</div>
+</body>
+</html>
