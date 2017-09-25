@@ -1,5 +1,4 @@
-# cpu-simulator
-HTML5 CPU Simulator (8 bit binary implementation of Little Man Computer)
+# HTML5 CPU Simulator (8 bit binary implementation of Little Man Computer)
 
 ![Von Neumann CPU Simulator for OCR A Level](https://tools.withcode.uk/cpu/thumb.jpg)
 
